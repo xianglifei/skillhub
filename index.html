@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillHub - AI智能体技能商店</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Noto Sans SC', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            yellow: '#FCD34D',
+                            orange: '#FB923C',
+                            pink: '#F472B6',
+                            purple: '#A78BFA',
+                            blue: '#60A5FA',
+                            green: '#4ADE80',
+                            teal: '#2DD4BF',
+                        },
+                        surface: {
+                            50: '#FAFAFA',
+                            100: '#F5F5F5',
+                            200: '#E5E5E5',
+                            800: '#262626',
+                            900: '#171717',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-delayed': 'float 6s ease-in-out 2s infinite',
+                        'float-slow': 'float 8s ease-in-out infinite',
+                        'bounce-slow': 'bounce 3s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'spin-slow': 'spin 12s linear infinite',
+                        'wiggle': 'wiggle 1s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        wiggle: {
+                            '0%, 100%': { transform: 'rotate(-3deg)' },
+                            '50%': { transform: 'rotate(3deg)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .geometric-pattern {
+            background-image:
+                radial-gradient(circle at 20% 80%, rgba(252, 211, 77, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(167, 139, 250, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(45, 212, 191, 0.2) 0%, transparent 40%);
+        }
+        .shape-blob {
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+        }
+        .shape-blob-2 {
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+        }
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .card-hover:hover {
+            transform: translateY(-8px) scale(1.02);
+        }
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .doodle-line {
+            background: repeating-linear-gradient(
+                90deg,
+                currentColor,
+                currentColor 8px,
+                transparent 8px,
+                transparent 12px
+            );
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-surface-50 text-surface-900 font-sans antialiased overflow-x-hidden">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-surface-50/80 backdrop-blur-md border-b border-surface-200/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-2">
+                    <div class="w-10 h-10 bg-gradient-to-br from-brand-yellow via-brand-orange to-brand-pink rounded-xl flex items-center justify-center transform rotate-3">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <span class="text-xl font-black tracking-tight">SkillHub</span>
+                </div>
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#features" class="text-sm font-medium text-surface-800 hover:text-brand-orange transition-colors">特色</a>
+                    <a href="#standards" class="text-sm font-medium text-surface-800 hover:text-brand-orange transition-colors">标准支持</a>
+                    <a href="#about" class="text-sm font-medium text-surface-800 hover:text-brand-orange transition-colors">关于我们</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen pt-24 pb-16 flex items-center geometric-pattern overflow-hidden">
+        <!-- Decorative shapes -->
+        <div class="absolute top-32 left-10 w-24 h-24 bg-brand-yellow/60 shape-blob animate-float"></div>
+        <div class="absolute top-48 right-20 w-32 h-32 bg-brand-purple/40 shape-blob-2 animate-float-delayed"></div>
+        <div class="absolute bottom-40 left-1/4 w-20 h-20 bg-brand-teal/50 shape-blob animate-float-slow"></div>
+        <div class="absolute top-1/3 right-1/4 w-16 h-16 bg-brand-pink/40 rounded-full animate-bounce-slow"></div>
+
+        <!-- Grid pattern -->
+        <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px); background-size: 60px 60px;"></div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                <!-- Left content -->
+                <div class="text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full border border-surface-200 shadow-sm mb-6 animate-pulse-slow">
+                        <span class="w-2 h-2 bg-brand-green rounded-full animate-pulse"></span>
+                        <span class="text-sm font-medium text-surface-700">已上线 128+ 专业智能体技能</span>
+                    </div>
+
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.1] mb-6">
+                        为 AI 智能体<br>
+                        <span class="relative inline-block">
+                            <span class="bg-gradient-to-r from-brand-yellow via-brand-orange to-brand-pink text-gradient">赋予超能力</span>
+                            <svg class="absolute -bottom-2 left-0 w-full h-3 text-brand-orange/50" viewBox="0 0 200 12" fill="none" preserveAspectRatio="none">
+                                <path d="M0 8C40 0 80 12 120 6C160 0 180 8 200 4" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                            </svg>
+                        </span>
+                    </h1>
+
+                    <p class="text-lg sm:text-xl text-surface-600 leading-relaxed max-w-xl mx-auto lg:mx-0 mb-8">
+                        SkillHub 是面向 Claude、OpenClaw 等 AI 智能体的专业技能商店。<br class="hidden sm:block">
+                        发现、购买和发布能让 AI 更聪明的技能。
+                    </p>
+
+                </div>
+
+                <!-- Right visual -->
+                <div class="relative hidden lg:block">
+                    <div class="relative w-full aspect-square max-w-lg mx-auto">
+                        <!-- Central hub -->
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-gradient-to-br from-brand-yellow via-brand-orange to-brand-pink rounded-3xl flex items-center justify-center shadow-2xl shadow-brand-orange/30 z-10 animate-pulse-slow">
+                            <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            </svg>
+                        </div>
+
+                        <!-- Orbiting skill cards -->
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-20 bg-white rounded-2xl shadow-xl shadow-brand-blue/20 flex items-center justify-center border-2 border-brand-blue/30 animate-float">
+                            <svg class="w-10 h-10 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                        </div>
+
+                        <div class="absolute top-1/4 right-0 w-16 h-16 bg-white rounded-xl shadow-xl shadow-brand-purple/20 flex items-center justify-center border-2 border-brand-purple/30 animate-float-delayed">
+                            <svg class="w-8 h-8 text-brand-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/>
+                            </svg>
+                        </div>
+
+                        <div class="absolute bottom-1/4 right-4 w-14 h-14 bg-white rounded-lg shadow-xl shadow-brand-pink/20 flex items-center justify-center border-2 border-brand-pink/30 animate-float-slow">
+                            <svg class="w-7 h-7 text-brand-pink" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                            </svg>
+                        </div>
+
+                        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-18 h-18 bg-white rounded-xl shadow-xl shadow-brand-teal/20 flex items-center justify-center border-2 border-brand-teal/30 animate-float-delayed">
+                            <svg class="w-9 h-9 text-brand-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                        </div>
+
+                        <div class="absolute top-1/3 left-4 w-12 h-12 bg-white rounded-lg shadow-xl shadow-brand-green/20 flex items-center justify-center border-2 border-brand-green/30 animate-float-slow">
+                            <svg class="w-6 h-6 text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                            </svg>
+                        </div>
+
+                        <!-- Connection lines (decorative) -->
+                        <svg class="absolute inset-0 w-full h-full" style="z-index: -1;">
+                            <circle cx="50%" cy="50%" r="35%" fill="none" stroke="rgba(251, 146, 60, 0.1)" stroke-width="1" stroke-dasharray="8 8"/>
+                            <circle cx="50%" cy="50%" r="45%" fill="none" stroke="rgba(167, 139, 250, 0.08)" stroke-width="1" stroke-dasharray="4 4"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-surface-400">
+            <span class="text-xs font-medium uppercase tracking-widest">向下滚动</span>
+            <div class="w-6 h-10 border-2 border-current rounded-full flex justify-center pt-2">
+                <div class="w-1 h-2 bg-current rounded-full animate-bounce"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-24 relative overflow-hidden">
+        <!-- Background decoration -->
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-surface-50 to-transparent"></div>
+            <div class="absolute -top-20 -right-20 w-96 h-96 bg-brand-yellow/20 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-20 -left-20 w-80 h-80 bg-brand-teal/20 rounded-full blur-3xl"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <!-- Section header -->
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <div class="inline-flex items-center gap-2 px-4 py-2 bg-brand-yellow/20 rounded-full mb-4">
+                    <span class="text-2xl">✨</span>
+                    <span class="text-sm font-semibold text-surface-800">为什么选择我们</span>
+                </div>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight mb-6">
+                    脑洞有多大<br>
+                    <span class="relative inline-block">
+                        能力就有多强
+                        <svg class="absolute -bottom-2 left-0 w-full h-4 text-brand-orange" viewBox="0 0 200 12" fill="none" preserveAspectRatio="none">
+                            <path d="M0 6C50 0 150 12 200 6" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                        </svg>
+                    </span>
+                </h2>
+                <p class="text-lg text-surface-600">
+                    我们汇聚了一群脑洞清奇的创造者，打造最让 AI 眼前一亮的技能生态
+                </p>
+            </div>
+
+            <!-- Feature cards -->
+            <div class="grid md:grid-cols-3 gap-6 lg:gap-8">
+                <!-- Card 1: 脑洞大 -->
+                <div class="group relative bg-white rounded-3xl p-8 shadow-sm border border-surface-100 card-hover overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-brand-purple/5 to-brand-pink/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="relative">
+                        <div class="w-16 h-16 bg-gradient-to-br from-brand-purple to-brand-pink rounded-2xl flex items-center justify-center mb-6 transform group-hover:rotate-6 transition-transform shadow-lg shadow-brand-purple/30">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-surface-900">脑洞清奇</h3>
+                        <p class="text-surface-600 leading-relaxed">
+                            每一个技能都源自天马行空的创意，打破常规思维定式，让 AI 拥有意想不到的超强能力，解锁无限可能。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 2: 能力强 -->
+                <div class="group relative bg-white rounded-3xl p-8 shadow-sm border border-surface-100 card-hover overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-brand-blue/5 to-brand-teal/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="relative">
+                        <div class="w-16 h-16 bg-gradient-to-br from-brand-blue to-brand-teal rounded-2xl flex items-center justify-center mb-6 transform group-hover:-rotate-6 transition-transform shadow-lg shadow-brand-blue/30">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-surface-900">能力超强</h3>
+                        <p class="text-surface-600 leading-relaxed">
+                            经过严格测试和优化的专业级技能，性能卓越、稳定可靠。每一个技能都经过千锤百炼，让 AI 发挥出最强大的威力。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 3: 创意足 -->
+                <div class="group relative bg-white rounded-3xl p-8 shadow-sm border border-surface-100 card-hover overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-brand-orange/5 to-brand-yellow/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="relative">
+                        <div class="w-16 h-16 bg-gradient-to-br from-brand-orange to-brand-yellow rounded-2xl flex items-center justify-center mb-6 transform group-hover:rotate-6 transition-transform shadow-lg shadow-brand-orange/30">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-surface-900">创意无限</h3>
+                        <p class="text-surface-600 leading-relaxed">
+                            源源不断的创新思维注入每个技能，拒绝平庸和模板化。我们追求的不仅是功能实现，更是令人眼前一亮的惊艳体验。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Standards Support Section -->
+    <section id="standards" class="py-24 relative overflow-hidden">
+        <!-- Background -->
+        <div class="absolute inset-0 bg-surface-900">
+            <div class="absolute top-0 left-1/4 w-96 h-96 bg-brand-purple/20 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-0 right-1/4 w-80 h-80 bg-brand-blue/20 rounded-full blur-3xl"></div>
+            <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0); background-size: 40px 40px;"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <!-- Section header -->
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full mb-4">
+                    <svg class="w-4 h-4 text-brand-yellow" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                    </svg>
+                    <span class="text-sm font-semibold text-white">行业标准兼容</span>
+                </div>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white mb-6">
+                    支持主流智能体<br>
+                    <span class="text-gradient bg-gradient-to-r from-brand-yellow via-brand-orange to-brand-pink">官方标准</span>
+                </h2>
+                <p class="text-lg text-white/70">
+                    所有技能均严格遵循官方规范开发，确保在你的智能体上无缝运行
+                </p>
+            </div>
+
+            <!-- Standard cards -->
+            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- Claude Code Standard -->
+                <div class="group relative bg-white/5 backdrop-blur-sm rounded-3xl p-8 border border-white/10 hover:bg-white/10 transition-all duration-500 hover:scale-[1.02]">
+                    <div class="absolute -top-6 -right-6 w-24 h-24 bg-gradient-to-br from-brand-orange to-brand-pink rounded-full opacity-20 blur-2xl group-hover:opacity-40 transition-opacity"></div>
+
+                    <div class="relative">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-16 h-16 bg-gradient-to-br from-brand-orange to-brand-yellow rounded-2xl flex items-center justify-center shadow-lg shadow-brand-orange/30">
+                                <svg class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold text-white">Claude Code</h3>
+                                <p class="text-white/50 text-sm">官方标准</p>
+                            </div>
+                        </div>
+
+                        <p class="text-white/70 leading-relaxed mb-6">
+                            完全兼容 Claude Code 官方 Skill 规范，所有技能经过严格测试，确保与 Claude Code 无缝集成，即装即用。
+                        </p>
+
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-brand-orange/20 text-brand-orange text-xs font-medium rounded-full">官方认证</span>
+                            <span class="px-3 py-1 bg-white/10 text-white/70 text-xs font-medium rounded-full">即装即用</span>
+                            <span class="px-3 py-1 bg-white/10 text-white/70 text-xs font-medium rounded-full">持续更新</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- OpenClaw Standard -->
+                <div class="group relative bg-white/5 backdrop-blur-sm rounded-3xl p-8 border border-white/10 hover:bg-white/10 transition-all duration-500 hover:scale-[1.02]">
+                    <div class="absolute -top-6 -left-6 w-24 h-24 bg-gradient-to-br from-brand-blue to-brand-teal rounded-full opacity-20 blur-2xl group-hover:opacity-40 transition-opacity"></div>
+
+                    <div class="relative">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-16 h-16 bg-gradient-to-br from-brand-blue to-brand-teal rounded-2xl flex items-center justify-center shadow-lg shadow-brand-blue/30">
+                                <svg class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold text-white">OpenClaw</h3>
+                                <p class="text-white/50 text-sm">官方标准</p>
+                            </div>
+                        </div>
+
+                        <p class="text-white/70 leading-relaxed mb-6">
+                            全面支持 OpenClaw 官方技能标准，精心打造的每一个技能都经过严格验证，完美适配 OpenClaw 生态体系。
+                        </p>
+
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-brand-blue/20 text-brand-blue text-xs font-medium rounded-full">官方认证</span>
+                            <span class="px-3 py-1 bg-white/10 text-white/70 text-xs font-medium rounded-full">生态兼容</span>
+                            <span class="px-3 py-1 bg-white/10 text-white/70 text-xs font-medium rounded-full">质量保证</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Categories Section -->
+    <section id="categories" class="py-24 relative overflow-hidden">
+        <!-- Background decoration -->
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute -top-20 -left-20 w-96 h-96 bg-brand-yellow/10 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-20 -right-20 w-80 h-80 bg-brand-teal/10 rounded-full blur-3xl"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <!-- Section header -->
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <div class="inline-flex items-center gap-2 px-4 py-2 bg-brand-orange/10 rounded-full mb-4">
+                    <span class="text-2xl">🪄</span>
+                    <span class="text-sm font-semibold text-surface-800">不仅仅是效率，更是魔法</span>
+                </div>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight mb-6">
+                    探索那些让你的智能体<br>
+                    <span class="relative inline-block">
+                        <span class="bg-gradient-to-r from-brand-yellow via-brand-orange to-brand-pink text-gradient">从"好用"变"惊艳"</span>
+                        <svg class="absolute -bottom-2 left-0 w-full h-3 text-brand-orange/50" viewBox="0 0 200 12" fill="none" preserveAspectRatio="none">
+                            <path d="M0 8C40 0 80 12 120 6C160 0 180 8 200 4" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        </svg>
+                    </span>
+                </h2>
+                <p class="text-lg text-surface-600">
+                    超级技能，释放 AI 智能体的无限潜能
+                </p>
+            </div>
+
+            <!-- Category cards -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Card 1: 办公助手 -->
+                <div class="group relative bg-white rounded-3xl p-6 shadow-sm border border-surface-100 card-hover overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-brand-yellow/5 to-brand-orange/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="relative">
+                        <div class="w-12 h-12 bg-gradient-to-br from-brand-yellow to-brand-orange rounded-xl flex items-center justify-center mb-4 shadow-lg shadow-brand-orange/30 transform group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold mb-1 text-surface-900">办公助手</h3>
+                        <p class="text-xs text-surface-500 mb-3">Office Pro</p>
+                        <p class="text-sm text-surface-600 leading-relaxed">
+                            释放繁琐流程，让你的效率突破边界。从文档自动化到日程调度，技能插件为你接管一切平庸任务。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 2: 编程专家 -->
+                <div class="group relative bg-white rounded-3xl p-6 shadow-sm border border-surface-100 card-hover overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-brand-blue/5 to-brand-teal/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="relative">
+                        <div class="w-12 h-12 bg-gradient-to-br from-brand-blue to-brand-teal rounded-xl flex items-center justify-center mb-4 shadow-lg shadow-brand-blue/30 transform group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold mb-1 text-surface-900">编程专家</h3>
+                        <p class="text-xs text-surface-500 mb-3">Coding Wizard</p>
+                        <p class="text-sm text-surface-600 leading-relaxed">
+                            跨越代码鸿沟，让每个人都能自由构建软件梦想。赋能智能体自主编写、调试并优化高质量代码。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 3: 创意设计 -->
+                <div class="group relative bg-white rounded-3xl p-6 shadow-sm border border-surface-100 card-hover overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-brand-pink/5 to-brand-purple/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="relative">
+                        <div class="w-12 h-12 bg-gradient-to-br from-brand-pink to-brand-purple rounded-xl flex items-center justify-center mb-4 shadow-lg shadow-brand-pink/30 transform group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold mb-1 text-surface-900">创意设计</h3>
+                        <p class="text-xs text-surface-500 mb-3">Design Master</p>
+                        <p class="text-sm text-surface-600 leading-relaxed">
+                            点燃灵感火花，让每个人都能轻松表达视觉创意。无论是品牌视觉还是 UI 构思，创意随触可及。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 4: 数据洞察 -->
+                <div class="group relative bg-white rounded-3xl p-6 shadow-sm border border-surface-100 card-hover overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-brand-teal/5 to-brand-green/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="relative">
+                        <div class="w-12 h-12 bg-gradient-to-br from-brand-teal to-brand-green rounded-xl flex items-center justify-center mb-4 shadow-lg shadow-brand-teal/30 transform group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold mb-1 text-surface-900">数据洞察</h3>
+                        <p class="text-xs text-surface-500 mb-3">Data Insight</p>
+                        <p class="text-sm text-surface-600 leading-relaxed">
+                            洞察数字背后的秘密，助你成为运筹帷幄的数据专家。通过深度学习技能，让海量数据瞬间转化为商业决策。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-24 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-surface-900 via-surface-800 to-surface-900"></div>
+        <div class="absolute inset-0 opacity-30" style="background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0); background-size: 40px 40px;"></div>
+
+        <!-- Decorative blobs -->
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-brand-orange/20 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 right-1/4 w-80 h-80 bg-brand-purple/20 rounded-full blur-3xl"></div>
+
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full mb-8">
+                <span class="text-2xl">🚀</span>
+                <span class="text-sm font-semibold text-white">开始你的 AI 技能之旅</span>
+            </div>
+
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white mb-6">
+                准备好让你的 AI 更聪明了吗？
+            </h2>
+            <p class="text-lg sm:text-xl text-white/70 mb-10 max-w-2xl mx-auto">
+                加入 SkillHub，探索无限可能的 AI 技能世界。无论是开发者还是用户，这里都有属于你的舞台。
+            </p>
+
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 relative overflow-hidden bg-surface-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                <!-- Left content -->
+                <div>
+                    <div class="inline-flex items-center gap-2 px-4 py-2 bg-brand-yellow/20 rounded-full mb-4">
+                        <span class="text-xl">💡</span>
+                        <span class="text-sm font-semibold text-surface-800">关于 SkillHub</span>
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight mb-6">
+                        为 AI 时代<br>
+                        <span class="text-brand-orange">而生的技能生态</span>
+                    </h2>
+                    <p class="text-lg text-surface-600 leading-relaxed mb-6">
+                        SkillHub 诞生于对 AI 智能体未来的无限憧憬。我们相信，当每一个开发者都能轻松分享和发现技能，AI 的世界将变得更加丰富多彩。
+                    </p>
+                    <p class="text-lg text-surface-600 leading-relaxed mb-8">
+                        我们致力于打造最开放、最专业、最具创意的 AI 技能市场，让每一个 AI 都能拥有独特的"超能力"。
+                    </p>
+
+                    <div class="flex flex-wrap gap-4">
+                        <div class="flex items-center gap-2">
+                            <div class="w-8 h-8 bg-brand-green/20 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm font-medium text-surface-700">专业认证</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-8 h-8 bg-brand-blue/20 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm font-medium text-surface-700">严格测试</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-8 h-8 bg-brand-purple/20 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-brand-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm font-medium text-surface-700">持续更新</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right illustration -->
+                <div class="relative">
+                    <div class="relative w-full aspect-square max-w-lg mx-auto">
+                        <!-- Main illustration container -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-brand-purple/20 via-brand-blue/20 to-brand-teal/20 rounded-3xl transform rotate-3"></div>
+                        <div class="absolute inset-0 bg-white rounded-3xl shadow-2xl flex flex-col items-center justify-center p-8">
+                            <!-- Team illustration -->
+                            <div class="flex -space-x-4 mb-6">
+                                <div class="w-16 h-16 bg-gradient-to-br from-brand-yellow to-brand-orange rounded-full border-4 border-white flex items-center justify-center shadow-lg">
+                                    <span class="text-2xl">👨‍💻</span>
+                                </div>
+                                <div class="w-16 h-16 bg-gradient-to-br from-brand-purple to-brand-pink rounded-full border-4 border-white flex items-center justify-center shadow-lg">
+                                    <span class="text-2xl">👩‍🎨</span>
+                                </div>
+                                <div class="w-16 h-16 bg-gradient-to-br from-brand-blue to-brand-teal rounded-full border-4 border-white flex items-center justify-center shadow-lg">
+                                    <span class="text-2xl">🧙‍♂️</span>
+                                </div>
+                            </div>
+
+                            <h3 class="text-2xl font-bold text-surface-900 mb-2">创意无限的团队</h3>
+                            <p class="text-center text-surface-600 mb-6">我们是一群对 AI 充满热情的创造者，致力于让每一 个AI 都更加智能</p>
+
+                            <!-- Decorative skill tags -->
+                            <div class="flex flex-wrap justify-center gap-2">
+                                <span class="px-3 py-1 bg-brand-yellow/20 text-brand-orange text-xs font-bold rounded-full">脑洞清奇</span>
+                                <span class="px-3 py-1 bg-brand-purple/20 text-brand-purple text-xs font-bold rounded-full">技术过硬</span>
+                                <span class="px-3 py-1 bg-brand-blue/20 text-brand-blue text-xs font-bold rounded-full">持续创新</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 bg-surface-900 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-8 mb-8">
+                <!-- Brand -->
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-brand-yellow via-brand-orange to-brand-pink rounded-xl flex items-center justify-center transform rotate-3">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <span class="text-xl font-black text-white tracking-tight">SkillHub</span>
+                </div>
+
+                <!-- Tagline -->
+                <p class="text-white/60 text-center md:text-right max-w-md">
+                    面向 AI 智能体的专业技能商店<br>
+                    为 Claude、OpenClaw 等智能体提供优质技能生态
+                </p>
+            </div>
+
+            <div class="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <p class="text-white/40 text-sm">
+                    &copy; 2026 SkillHub. All rights reserved.
+                </p>
+                <div class="flex items-center gap-6">
+                    <a href="#" class="text-white/40 hover:text-white text-sm transition-colors">隐私政策</a>
+                    <a href="#" class="text-white/40 hover:text-white text-sm transition-colors">服务条款</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

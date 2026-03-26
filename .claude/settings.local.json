@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/xianglifei/Claude Code/技能商店/**)",
+      "Bash(mv \"agent-skills-shop v4\" skillhub)",
+      "Bash(brew install:*)",
+      "Bash(gh:*)",
+      "Bash(git init:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
+    ]
+  }
+}
