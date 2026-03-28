@@ -14,7 +14,7 @@ SKILL_DESCRIPTIONS = {
     "zhipu-file-parser": "智谱文件解析服务。使用智谱AI的文件解析API解析多种文件格式（PDF、DOCX、DOC、XLS、XLSX、PPT、PPTX、图片等），提取文本内容。支持同步解析，返回结构化结果。",
     "zhipu-ocr": "智谱OCR服务。使用智谱AI的OCR API识别图片中的文字，支持手写体识别、多语言识别。",
     "zhipu-web-search": "智谱网络搜索服务。使用智谱AI的Web Search API进行网络搜索。",
-    "zhipu-web-reader": "智谱网页内容读取服务。使用智谱AI的Web Search API读取特定网站内容。",
+    "zhipu-web-reader": "智谱网页内容读取服务。使用智谱AI的Reader API读取并解析指定URL的网页内容，支持Markdown/Text格式。",
     "zhipu-layout-parsing": "智谱文档布局解析服务。使用GLM-OCR模型解析文档和图片的布局结构。",
 }
 
@@ -31,12 +31,26 @@ def extract_skill_metadata(skill_path):
             for name in zf.namelist():
                 if name.endswith('SKILL.md'):
                     content = zf.read(name).decode('utf-8')
-                    # 尝试提取描述
-                    desc_match = re.search(r'description:\s*"?(.+?)"?\s*\n', content)
+                    # 尝试提取描述 - 支持多种 YAML 格式
+                    # 格式1: description: "单行描述"
+                    desc_match = re.search(r'description:\s*"([^"]+)"', content)
                     if desc_match:
-                        description = desc_match.group(1).strip().strip('"')
-                        # 去除 TRIGGER 和 DO NOT trigger 部分
-                        description = re.split(r'\s*TRIGGER when:', description)[0].strip()
+                        description = desc_match.group(1).strip()
+                    else:
+                        # 格式2: description: | 后跟多行描述
+                        desc_match = re.search(r'description:\s*\|\s*\n((?:[ \t]+.+\n)+)', content)
+                        if desc_match:
+                            # 提取多行内容，去除前导空格
+                            lines = desc_match.group(1).strip().split('\n')
+                            description = ' '.join(line.strip() for line in lines)
+                        else:
+                            # 格式3: description: 单行描述（无引号）
+                            desc_match = re.search(r'description:\s*([^\n|]+)\n', content)
+                            if desc_match:
+                                description = desc_match.group(1).strip()
+
+                    # 去除 TRIGGER 和 DO NOT trigger 部分
+                    description = re.split(r'\s*TRIGGER when:', description)[0].strip()
                     break
     except Exception as e:
         print(f"Warning: Could not extract metadata from {skill_path}: {e}")
