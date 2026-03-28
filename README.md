@@ -10,8 +10,9 @@
 
 | 技能名称 | 简介 | 下载地址 |
 |---------|------|---------|
-| zhipu-web-reader | 智谱网页内容读取服务。使用智谱AI的Reader API读取并解析指定URL的网页内容，支持Markdown/Text格式、图片保留、摘要选项。适合需要获取特定网页内容的场景。 | [下载](https://skillhub.feixing.io/openclaw/zhipu-web-reader.skill) |
+| zhipu-web-reader | 智谱网页内容读取服务。使用智谱AI的Reader API读取并解析指定URL的网页内容，支持Markdown/Text格式、图片保留、摘要选项。Use when: (1) 读取特定网页URL、解析网页内容，(2) 提取网页正文、获取网页标题和描述。NOT for: 用户需要进行网络搜索（使用zhipu-web-search）。 | [下载](https://skillhub.feixing.io/openclaw/zhipu-web-reader.skill) |
 | zhipu-web-search | 智谱网络搜索服务：使用智谱 AI 的 Web Search API 进行网络搜索，支持多搜索引擎（智谱基础版、智谱高阶版、搜狗、夸克）。Use when: (1) 需要进行网络搜索、网页搜索、信息检索，(2) 查找网上资料、搜索最新新闻，(3) 用户明确要求使用智谱搜索。NOT for: 用户只想读取特定网页内容（使用 zhipu-web-reader）。 | [下载](https://skillhub.feixing.io/openclaw/zhipu-web-search.skill) |
+| zhipu-layout-parsing | 智谱文档布局解析服务：使用 GLM-OCR 模型解析文档和图片的布局结构，识别文本、表格、公式、图片等元素，返回 Markdown 格式结果和详细布局信息。Use when: (1) 解析文档布局、提取文档结构，(2) 识别表格、公式、图片，(3) 分析 PDF 布局，(4) 提取扫描件内容。NOT for: 用户只需要简单文字 OCR（使用 zhipu-ocr）。 | [下载](https://skillhub.feixing.io/openclaw/zhipu-layout-parsing.skill) |
 | zhipu-file-parser | 智谱文件解析服务。使用智谱AI的文件解析API解析多种文件格式（PDF、DOCX、DOC、XLS、XLSX、PPT、PPTX、图片等），提取文本内容。支持同步解析，返回结构化结果。 | [下载](https://skillhub.feixing.io/openclaw/zhipu-file-parser.skill) |
 
 
