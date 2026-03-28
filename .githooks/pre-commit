@@ -1,0 +1,19 @@
+#!/bin/bash
+# 自动更新 README 中的技能列表
+# 在每次提交前运行，确保 README 与 .skill 文件同步
+
+cd "$(git rev-parse --show-toplevel)"
+
+# 检查是否有 .skill 文件变更
+if git diff --cached --name-only | grep -q '\.skill$'; then
+    echo "检测到 .skill 文件变更，正在更新 README..."
+
+    # 运行更新脚本
+    python3 scripts/update_readme.py
+
+    # 如果 README 有变化，加入本次提交
+    if ! git diff --quiet README.md; then
+        git add README.md
+        echo "README.md 已更新并加入本次提交"
+    fi
+fi

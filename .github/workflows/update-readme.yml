@@ -1,9 +1,7 @@
 name: Update README
 
+# 仅手动触发（README 更新已改为本地 pre-commit hook 自动处理）
 on:
-  push:
-    paths:
-      - '**/*.skill'
   workflow_dispatch:
 
 permissions:
