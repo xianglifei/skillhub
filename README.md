@@ -14,6 +14,7 @@
 | zhipu-web-search | 智谱网络搜索服务：使用智谱 AI 的 Web Search API 进行网络搜索，支持多搜索引擎（智谱基础版、智谱高阶版、搜狗、夸克）。Use when: (1) 需要进行网络搜索、网页搜索、信息检索，(2) 查找网上资料、搜索最新新闻，(3) 用户明确要求使用智谱搜索。NOT for: 用户只想读取特定网页内容（使用 zhipu-web-reader）。 | [下载](https://skillhub.feixing.io/openclaw/zhipu-web-search.skill) |
 | zhipu-layout-parsing | 智谱文档布局解析服务：使用 GLM-OCR 模型解析文档和图片的布局结构，识别文本、表格、公式、图片等元素，返回 Markdown 格式结果和详细布局信息。Use when: (1) 解析文档布局、提取文档结构，(2) 识别表格、公式、图片，(3) 分析 PDF 布局，(4) 提取扫描件内容。NOT for: 用户只需要简单文字 OCR（使用 zhipu-ocr）。 | [下载](https://skillhub.feixing.io/openclaw/zhipu-layout-parsing.skill) |
 | zhipu-file-parser | 智谱文件解析服务。使用智谱AI的文件解析API解析多种文件格式（PDF、DOCX、DOC、XLS、XLSX、PPT、PPTX、图片等），提取文本内容。支持同步解析，返回结构化结果。 | [下载](https://skillhub.feixing.io/openclaw/zhipu-file-parser.skill) |
+| zhipu-toolkit | 智谱 AI 工具集：整合文件解析、文档布局解析、网页阅读、网络搜索四大能力。Use when: (1) 解析 PDF/Word/Excel/PPT 等文件提取文本，(2) 解析文档布局结构识别表格/公式/图片，(3) 读取指定网页 URL 内容，(4) 进行网络搜索检索信息。支持多种搜索引擎和输出格式。 | [下载](https://skillhub.feixing.io/openclaw/zhipu-toolkit.skill) |
 
 
 ### Claude Code 系列
