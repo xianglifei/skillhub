@@ -22,7 +22,7 @@
 
 | 技能名称 | 简介 | 下载地址 |
 |---------|------|---------|
-| openclaw-skill-creator | 创建、编辑、改进或打包 OpenClaw 技能。用于：(1) 创建新的 OpenClaw 技能，(2) 编辑或改进现有的 OpenClaw 技能，(3) 将技能打包为 .skill 文件，(4) 了解 OpenClaw 技能结构和规范。需要 OpenClaw 环境。 | [下载](https://skillhub.feixing.io/claude-code/openclaw-skill-creator.skill) |
+| openclaw-skill-creator | Create, edit, improve, or package OpenClaw skills. Use when: (1) creating a new skill for OpenClaw, (2) editing or improving an existing OpenClaw skill, (3) packaging a skill into .skill file, (4) understanding OpenClaw skill structure and conventions. Triggers: "create an OpenClaw skill", "make a skill for openclaw", "openclaw skill", "skill for openclaw", "package openclaw skill". IMPORTANT: This skill requires OpenClaw environment. Scripts like init_skill.py and package_skill.py are part of OpenClaw installation. | [下载](https://skillhub.feixing.io/claude-code/openclaw-skill-creator.skill) |
 | list-github-repo | 扫描本地 Git 仓库并按类型分类输出。当你想查看本地有哪些 Git 仓库、它们的远程地址是什么、哪些是你自己的项目、哪些是从别人那里克隆的时候使用此技能。触发短语包括："查看本地仓库"、"列出我的 git 仓库"、"有哪些 github 仓库"、"本地项目列表"。 | [下载](https://skillhub.feixing.io/claude-code/list-github-repo.skill) |
 
 

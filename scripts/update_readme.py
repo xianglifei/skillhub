@@ -31,21 +31,29 @@ def extract_skill_metadata(skill_path):
             for name in zf.namelist():
                 if name.endswith('SKILL.md'):
                     content = zf.read(name).decode('utf-8')
-                    # 尝试提取描述 - 支持多种 YAML 格式
+
+                    # 先提取 YAML frontmatter（--- 和 --- 之间的内容）
+                    frontmatter_match = re.search(r'^---\s*\n(.*?)\n---', content, re.DOTALL)
+                    if frontmatter_match:
+                        frontmatter = frontmatter_match.group(1)
+                    else:
+                        frontmatter = content
+
+                    # 在 frontmatter 中尝试提取描述 - 支持多种 YAML 格式
                     # 格式1: description: "单行描述"
-                    desc_match = re.search(r'description:\s*"([^"]+)"', content)
+                    desc_match = re.search(r'description:\s*"([^"]+)"', frontmatter)
                     if desc_match:
                         description = desc_match.group(1).strip()
                     else:
                         # 格式2: description: | 后跟多行描述
-                        desc_match = re.search(r'description:\s*\|\s*\n((?:[ \t]+.+\n)+)', content)
+                        desc_match = re.search(r'description:\s*\|\s*\n((?:[ \t]+.+\n)+)', frontmatter)
                         if desc_match:
                             # 提取多行内容，去除前导空格
                             lines = desc_match.group(1).strip().split('\n')
                             description = ' '.join(line.strip() for line in lines)
                         else:
                             # 格式3: description: 单行描述（无引号）
-                            desc_match = re.search(r'description:\s*([^\n|]+)\n', content)
+                            desc_match = re.search(r'description:\s*(.+?)(?:\n|$)', frontmatter)
                             if desc_match:
                                 description = desc_match.group(1).strip()
 
