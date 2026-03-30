@@ -9,13 +9,15 @@ import zipfile
 import re
 from pathlib import Path
 
-# 技能描述映射（当无法从文件中提取时使用）
+# 技能描述映射（优先使用此映射，确保中文简介）
 SKILL_DESCRIPTIONS = {
     "zhipu-file-parser": "智谱文件解析服务。使用智谱AI的文件解析API解析多种文件格式（PDF、DOCX、DOC、XLS、XLSX、PPT、PPTX、图片等），提取文本内容。支持同步解析，返回结构化结果。",
     "zhipu-ocr": "智谱OCR服务。使用智谱AI的OCR API识别图片中的文字，支持手写体识别、多语言识别。",
     "zhipu-web-search": "智谱网络搜索服务。使用智谱AI的Web Search API进行网络搜索。",
     "zhipu-web-reader": "智谱网页内容读取服务。使用智谱AI的Reader API读取并解析指定URL的网页内容，支持Markdown/Text格式。",
     "zhipu-layout-parsing": "智谱文档布局解析服务。使用GLM-OCR模型解析文档和图片的布局结构。",
+    "openclaw-skill-creator": "创建、编辑、改进或打包 OpenClaw 技能。用于：(1) 创建新的 OpenClaw 技能，(2) 编辑或改进现有的 OpenClaw 技能，(3) 将技能打包为 .skill 文件，(4) 了解 OpenClaw 技能结构和规范。需要 OpenClaw 环境。",
+    "list-github-repo": "扫描本地 Git 仓库并按类型分类输出。当你想查看本地有哪些 Git 仓库、它们的远程地址是什么、哪些是你自己的项目、哪些是从别人那里克隆的时候使用此技能。",
 }
 
 BASE_URL = "https://skillhub.feixing.io"
@@ -23,7 +25,13 @@ BASE_URL = "https://skillhub.feixing.io"
 def extract_skill_metadata(skill_path):
     """从 .skill 文件中提取技能元数据"""
     skill_name = Path(skill_path).stem
-    description = SKILL_DESCRIPTIONS.get(skill_name, "AI 智能体技能包")
+
+    # 优先使用映射中的中文描述
+    if skill_name in SKILL_DESCRIPTIONS:
+        return skill_name, SKILL_DESCRIPTIONS[skill_name]
+
+    # 否则从文件中提取
+    description = "AI 智能体技能包"
 
     # 尝试从 zip 文件中提取 SKILL.md
     try:
