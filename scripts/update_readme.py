@@ -9,15 +9,13 @@ import zipfile
 import re
 from pathlib import Path
 
-# 技能描述映射（优先使用此映射，确保中文简介）
+# 技能描述映射（当无法从文件中提取时使用）
 SKILL_DESCRIPTIONS = {
     "zhipu-file-parser": "智谱文件解析服务。使用智谱AI的文件解析API解析多种文件格式（PDF、DOCX、DOC、XLS、XLSX、PPT、PPTX、图片等），提取文本内容。支持同步解析，返回结构化结果。",
     "zhipu-ocr": "智谱OCR服务。使用智谱AI的OCR API识别图片中的文字，支持手写体识别、多语言识别。",
     "zhipu-web-search": "智谱网络搜索服务。使用智谱AI的Web Search API进行网络搜索。",
     "zhipu-web-reader": "智谱网页内容读取服务。使用智谱AI的Reader API读取并解析指定URL的网页内容，支持Markdown/Text格式。",
     "zhipu-layout-parsing": "智谱文档布局解析服务。使用GLM-OCR模型解析文档和图片的布局结构。",
-    "openclaw-skill-creator": "创建、编辑、改进或打包 OpenClaw 技能。用于：(1) 创建新的 OpenClaw 技能，(2) 编辑或改进现有的 OpenClaw 技能，(3) 将技能打包为 .skill 文件，(4) 了解 OpenClaw 技能结构和规范。需要 OpenClaw 环境。",
-    "list-github-repo": "扫描本地 Git 仓库并按类型分类输出。当你想查看本地有哪些 Git 仓库、它们的远程地址是什么、哪些是你自己的项目、哪些是从别人那里克隆的时候使用此技能。",
 }
 
 BASE_URL = "https://skillhub.feixing.io"
@@ -25,13 +23,7 @@ BASE_URL = "https://skillhub.feixing.io"
 def extract_skill_metadata(skill_path):
     """从 .skill 文件中提取技能元数据"""
     skill_name = Path(skill_path).stem
-
-    # 优先使用映射中的中文描述
-    if skill_name in SKILL_DESCRIPTIONS:
-        return skill_name, SKILL_DESCRIPTIONS[skill_name]
-
-    # 否则从文件中提取
-    description = "AI 智能体技能包"
+    description = SKILL_DESCRIPTIONS.get(skill_name, "AI 智能体技能包")
 
     # 尝试从 zip 文件中提取 SKILL.md
     try:
@@ -39,29 +31,21 @@ def extract_skill_metadata(skill_path):
             for name in zf.namelist():
                 if name.endswith('SKILL.md'):
                     content = zf.read(name).decode('utf-8')
-
-                    # 先提取 YAML frontmatter（--- 和 --- 之间的内容）
-                    frontmatter_match = re.search(r'^---\s*\n(.*?)\n---', content, re.DOTALL)
-                    if frontmatter_match:
-                        frontmatter = frontmatter_match.group(1)
-                    else:
-                        frontmatter = content
-
-                    # 在 frontmatter 中尝试提取描述 - 支持多种 YAML 格式
+                    # 尝试提取描述 - 支持多种 YAML 格式
                     # 格式1: description: "单行描述"
-                    desc_match = re.search(r'description:\s*"([^"]+)"', frontmatter)
+                    desc_match = re.search(r'description:\s*"([^"]+)"', content)
                     if desc_match:
                         description = desc_match.group(1).strip()
                     else:
                         # 格式2: description: | 后跟多行描述
-                        desc_match = re.search(r'description:\s*\|\s*\n((?:[ \t]+.+\n)+)', frontmatter)
+                        desc_match = re.search(r'description:\s*\|\s*\n((?:[ \t]+.+\n)+)', content)
                         if desc_match:
                             # 提取多行内容，去除前导空格
                             lines = desc_match.group(1).strip().split('\n')
                             description = ' '.join(line.strip() for line in lines)
                         else:
                             # 格式3: description: 单行描述（无引号）
-                            desc_match = re.search(r'description:\s*(.+?)(?:\n|$)', frontmatter)
+                            desc_match = re.search(r'description:\s*([^\n|]+)\n', content)
                             if desc_match:
                                 description = desc_match.group(1).strip()
 
