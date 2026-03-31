@@ -15,6 +15,7 @@
 | zhipu-layout-parsing | 智谱文档布局解析服务：使用 GLM-OCR 模型解析文档和图片的布局结构，识别文本、表格、公式、图片等元素，返回 Markdown 格式结果和详细布局信息。Use when: (1) 解析文档布局、提取文档结构，(2) 识别表格、公式、图片，(3) 分析 PDF 布局，(4) 提取扫描件内容。NOT for: 用户只需要简单文字 OCR（使用 zhipu-ocr）。 | [下载](https://skillhub.feixing.io/openclaw/zhipu-layout-parsing.skill) |
 | zhipu-file-parser | 智谱文件解析服务。使用智谱AI的文件解析API解析多种文件格式（PDF、DOCX、DOC、XLS、XLSX、PPT、PPTX、图片等），提取文本内容。支持同步解析，返回结构化结果。 | [下载](https://skillhub.feixing.io/openclaw/zhipu-file-parser.skill) |
 | zhipu-toolkit | 智谱 AI 工具集：整合文件解析、文档布局解析、网页阅读、网络搜索四大能力。Use when: (1) 解析 PDF/Word/Excel/PPT 等文件提取文本，(2) 解析文档布局结构识别表格/公式/图片，(3) 读取指定网页 URL 内容，(4) 进行网络搜索检索信息。支持多种搜索引擎和输出格式。 | [下载](https://skillhub.feixing.io/openclaw/zhipu-toolkit.skill) |
+| audio-transcription | 录音转文字服务，使用火山引擎豆包大模型进行语音识别。支持本地文件自动上传云端、转写完成自动删除。支持格式：mp3、wav、ogg、raw。触发场景：(1) 将音频文件转换为文字，(2) 转写会议录音、访谈录音、课程录音等。支持说话人分离、情绪检测、多语言识别。首次使用需配置火山引擎 API Key。 | [下载](https://skillhub.feixing.io/openclaw/audio-transcription.skill) |
 
 
 ### Claude Code 系列
