@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Updated - 2026-04-01
+
+#### Claude Code 系列
+
+- **setup-sound-notifications** - 更新声音通知技能
+  - 内置音频文件，无需从外部下载
+  - 包含 progress_loop.wav 和 celebration.wav 音效
+  - 简化安装流程，开箱即用
+
 ### Added - 2026-04-01
 
 #### Claude Code 系列
