@@ -24,10 +24,10 @@
 
 | 技能名称 | 简介 | 下载地址 |
 |---------|------|---------|
-| openclaw-skill-creator | One-line description | [下载](https://skillhub.feixing.io/claude-code/openclaw-skill-creator.skill) |
+| openclaw-skill-creator | 创建、编辑、改进或打包 OpenClaw 技能。用于：(1) 创建新的 OpenClaw 技能，(2) 编辑或改进现有的 OpenClaw 技能，(3) 将技能打包为 .skill 文件，(4) 了解 OpenClaw 技能结构和规范。需要 OpenClaw 环境。 | [下载](https://skillhub.feixing.io/claude-code/openclaw-skill-creator.skill) |
 | product-review | AI产品创意多专家评审系统。输入产品创意，获得5位专家的多维度评审报告和毒舌劝退建议。 | [下载](https://skillhub.feixing.io/claude-code/product-review.skill) |
 | list-github-repo | 扫描本地 Git 仓库并按类型分类输出。当你想查看本地有哪些 Git 仓库、它们的远程地址是什么、哪些是你自己的项目、哪些是从别人那里克隆的时候使用此技能。触发短语包括："查看本地仓库"、"列出我的 git 仓库"、"有哪些 github 仓库"、"本地项目列表"。 | [下载](https://skillhub.feixing.io/claude-code/list-github-repo.skill) |
-| setup-sound-notifications | Set up sound notifications for Claude Code using SND01 sine sound kit from snd.dev. Plays a progress loop while waiting for user confirmation, and a celebration sound when Claude finishes responding. | [下载](https://skillhub.feixing.io/claude-code/setup-sound-notifications.skill) |
+| setup-sound-notifications | 为 Claude Code 设置或卸载声音通知。在等待用户确认时播放进度循环音，任务完成时播放庆祝音。适用于用户需要音频提醒、声音通知、音频反馈，或想要卸载/禁用声音通知的场景。仅支持 macOS。 | [下载](https://skillhub.feixing.io/claude-code/setup-sound-notifications.skill) |
 
 
 ---
