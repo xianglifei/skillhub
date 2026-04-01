@@ -2,6 +2,11 @@
 """
 自动更新 README.md 中的技能列表
 扫描所有 .skill 文件并更新对应的表格
+
+设计原则：
+1. 增量更新：只添加新增技能，保留已有技能的简介
+2. 优先使用 README 中已有的中文简介
+3. 新技能才从 SKILL.md 提取 description
 """
 
 import os
@@ -9,7 +14,9 @@ import zipfile
 import re
 from pathlib import Path
 
-# 技能描述映射（当无法从文件中提取时使用）
+BASE_URL = "https://skillhub.feixing.io"
+
+# 技能描述映射（新增技能的默认中文描述，优先级最高）
 SKILL_DESCRIPTIONS = {
     "zhipu-file-parser": "智谱文件解析服务。使用智谱AI的文件解析API解析多种文件格式（PDF、DOCX、DOC、XLS、XLSX、PPT、PPTX、图片等），提取文本内容。支持同步解析，返回结构化结果。",
     "zhipu-ocr": "智谱OCR服务。使用智谱AI的OCR API识别图片中的文字，支持手写体识别、多语言识别。",
@@ -18,19 +25,43 @@ SKILL_DESCRIPTIONS = {
     "zhipu-layout-parsing": "智谱文档布局解析服务。使用GLM-OCR模型解析文档和图片的布局结构。",
 }
 
-BASE_URL = "https://skillhub.feixing.io"
+def extract_existing_descriptions(readme_path):
+    """从现有 README 中提取已有技能的简介"""
+    existing = {}
 
-def extract_skill_metadata(skill_path):
-    """从 .skill 文件中提取技能元数据"""
+    with open(readme_path, 'r', encoding='utf-8') as f:
+        content = f.read()
+
+    # 匹配表格行：| skill-name | description | [下载](url) |
+    pattern = r'\|\s*([a-zA-Z0-9_-]+)\s*\|\s*([^|]+?)\s*\|\s*\[下载\]'
+    matches = re.findall(pattern, content)
+
+    for skill_name, description in matches:
+        existing[skill_name] = description.strip()
+
+    return existing
+
+def extract_skill_metadata(skill_path, existing_descriptions):
+    """从 .skill 文件中提取技能元数据，优先使用已有简介"""
     skill_name = Path(skill_path).stem
-    description = SKILL_DESCRIPTIONS.get(skill_name, "AI 智能体技能包")
 
-    # 尝试从 zip 文件中提取 SKILL.md
+    # 优先级1：使用 README 中已有的简介
+    if skill_name in existing_descriptions:
+        return skill_name, existing_descriptions[skill_name]
+
+    # 优先级2：使用预设的中文描述
+    if skill_name in SKILL_DESCRIPTIONS:
+        return skill_name, SKILL_DESCRIPTIONS[skill_name]
+
+    # 优先级3：从 SKILL.md 提取 description
+    description = "AI 智能体技能包"
+
     try:
         with zipfile.ZipFile(skill_path, 'r') as zf:
             for name in zf.namelist():
                 if name.endswith('SKILL.md'):
                     content = zf.read(name).decode('utf-8')
+
                     # 尝试提取描述 - 支持多种 YAML 格式
                     # 格式1: description: "单行描述"
                     desc_match = re.search(r'description:\s*"([^"]+)"', content)
@@ -40,7 +71,6 @@ def extract_skill_metadata(skill_path):
                         # 格式2: description: | 后跟多行描述
                         desc_match = re.search(r'description:\s*\|\s*\n((?:[ \t]+.+\n)+)', content)
                         if desc_match:
-                            # 提取多行内容，去除前导空格
                             lines = desc_match.group(1).strip().split('\n')
                             description = ' '.join(line.strip() for line in lines)
                         else:
@@ -60,7 +90,7 @@ def extract_skill_metadata(skill_path):
 # 定义技能分类文件夹
 SKILL_CATEGORIES = ['openclaw', 'claude-code']
 
-def scan_skills(base_dir):
+def scan_skills(base_dir, existing_descriptions):
     """扫描所有分类文件夹中的技能"""
     skills = {}
 
@@ -70,7 +100,7 @@ def scan_skills(base_dir):
             skills[category_name] = []
 
             for skill_file in category_dir.glob('*.skill'):
-                skill_name, description = extract_skill_metadata(skill_file)
+                skill_name, description = extract_skill_metadata(skill_file, existing_descriptions)
                 download_url = f"{BASE_URL}/{category_name}/{skill_file.name}"
                 skills[category_name].append({
                     'name': skill_name,
@@ -120,8 +150,13 @@ def main():
     base_dir = Path(__file__).parent.parent
     readme_path = base_dir / 'README.md'
 
-    skills = scan_skills(base_dir)
-    print(f"Found skills: {skills}")
+    # 先提取现有 README 中的已有简介
+    existing_descriptions = extract_existing_descriptions(readme_path)
+    print(f"Existing descriptions: {list(existing_descriptions.keys())}")
+
+    # 扫描技能，保留已有简介
+    skills = scan_skills(base_dir, existing_descriptions)
+    print(f"Found skills: {[s['name'] for cat in skills.values() for s in cat]}")
 
     update_readme(readme_path, skills)
 
