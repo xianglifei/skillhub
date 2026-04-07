@@ -27,6 +27,7 @@
 | openclaw-skill-creator | 创建、编辑、改进或打包 OpenClaw 技能。用于：(1) 创建新的 OpenClaw 技能，(2) 编辑或改进现有的 OpenClaw 技能，(3) 将技能打包为 .skill 文件，(4) 了解 OpenClaw 技能结构和规范。需要 OpenClaw 环境。 | [下载](https://skillhub.feixing.io/claude-code/openclaw-skill-creator.skill) |
 | pdf-book-generator | 使用 Markdown 撰写技术书籍/文档并生成专业排版的 PDF。支持多章节分文件管理、中文排版。触发短语："我想写一本书"、"帮我生成 PDF 电子书"、"写一份技术教程"、"多章节文档怎么管理"。 | [下载](https://skillhub.feixing.io/claude-code/pdf-book-generator.skill) |
 | product-review | AI产品创意多专家评审系统。输入产品创意，获得5位专家的多维度评审报告和毒舌劝退建议。 | [下载](https://skillhub.feixing.io/claude-code/product-review.skill) |
+| list-cli | 列出当前电脑中已安装的 CLI 软件工具。当用户想查看有哪些命令行工具、忘记安装了什么 CLI、或者想整理/盘点 CLI 工具时使用。支持按包管理器分类，过滤系统命令，输出美观的表格格式。 | [下载](https://skillhub.feixing.io/claude-code/list-cli.skill) |
 | list-github-repo | 扫描本地 Git 仓库并按类型分类输出。当你想查看本地有哪些 Git 仓库、它们的远程地址是什么、哪些是你自己的项目、哪些是从别人那里克隆的时候使用此技能。触发短语包括："查看本地仓库"、"列出我的 git 仓库"、"有哪些 github 仓库"、"本地项目列表"。 | [下载](https://skillhub.feixing.io/claude-code/list-github-repo.skill) |
 | setup-sound-notifications | 为 Claude Code 设置或卸载声音通知。在等待用户确认时播放进度循环音，任务完成时播放庆祝音。适用于用户需要音频提醒、声音通知、音频反馈，或想要卸载/禁用声音通知的场景。仅支持 macOS。 | [下载](https://skillhub.feixing.io/claude-code/setup-sound-notifications.skill) |
 
