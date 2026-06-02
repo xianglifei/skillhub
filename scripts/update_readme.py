@@ -88,7 +88,7 @@ def extract_skill_metadata(skill_path, existing_descriptions):
     return skill_name, description
 
 # 定义技能分类文件夹
-SKILL_CATEGORIES = ['openclaw', 'claude-code']
+SKILL_CATEGORIES = ['openclaw', 'claude-code', 'minimax']
 
 def scan_skills(base_dir, existing_descriptions):
     """扫描所有分类文件夹中的技能"""
@@ -130,6 +130,7 @@ def update_readme(readme_path, skills):
     categories = {
         'openclaw': {'title': 'OpenClaw 系列', 'desc': 'OpenClaw 系列技能基于智谱 AI 服务构建'},
         'claude-code': {'title': 'Claude Code 系列', 'desc': 'Claude Code 系列技能专为 Claude Code CLI 工具设计'},
+        'minimax': {'title': 'MiniMax Code 系列', 'desc': 'MiniMax Code 系列技能专为 MiniMax Code 工具设计'},
     }
 
     for category_name, info in categories.items():

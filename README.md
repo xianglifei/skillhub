@@ -34,6 +34,15 @@
 | setup-sound-notifications | 为 Claude Code 设置或卸载声音通知。在等待用户确认时播放进度循环音，任务完成时播放庆祝音。适用于用户需要音频提醒、声音通知、音频反馈，或想要卸载/禁用声音通知的场景。仅支持 macOS。 | [下载](https://skillhub.feixing.io/claude-code/setup-sound-notifications.skill) |
 
 
+### MiniMax Code 系列
+
+> MiniMax Code 系列技能专为 MiniMax Code 工具设计
+
+| 技能名称 | 简介 | 下载地址 |
+|---------|------|---------|
+| setup-custom-llm | 配置第三方 LLM Provider 到 MiniMax Code。支持 Anthropic 和 OpenAI 两种协议，包含自动合并配置的 Python 脚本。触发场景：添加模型、配置大模型、接入 DeepSeek/OpenAI/Qwen/GLM、自定义 LLM、换模型、用自己的 API Key。 | [下载](https://skillhub.feixing.io/minimax/setup-custom-llm.skill) |
+
+
 ---
 
 ## 如何使用

@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added - 2026-06-02
 
+#### MiniMax Code 系列
+
+- **setup-custom-llm** - 新增第三方 LLM Provider 配置技能
+  - 支持 Anthropic 和 OpenAI 两种协议
+  - Anthropic 协议可获得 Prompt Caching 和推理过程展示
+  - 包含自动合并配置的 Python 脚本（merge_provider.py）
+  - 触发场景：添加模型、配置大模型、接入 DeepSeek/OpenAI/Qwen/GLM、自定义 LLM
+
+### Added - 2026-06-02
+
 #### OpenClaw 系列
 
 - **image-compress** - 新增图片压缩技能（从 my-openclaw-skills 仓库迁移）
