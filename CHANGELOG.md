@@ -7,6 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added - 2026-06-02
+
+#### OpenClaw 系列
+
+- **image-compress** - 新增图片压缩技能（从 my-openclaw-skills 仓库迁移）
+  - 支持 PNG/JPG/GIF/SVG 所有常见图片格式
+  - 默认无损压缩，压缩率和 ImageOptim 完全一致
+  - 可自定义压缩级别（lossless/medium/high）、是否保留 EXIF 信息
+  - 原始时间线：
+    - 2026-03-22：初始提交，image-compress 图片压缩技能 v1.0
+    - 2026-06-02：迁移至 SkillHub
+
+- **md-to-xiaohongshu** - 新增 Markdown/飞书文档转小红书卡片图片技能（从 my-openclaw-skills 仓库迁移）
+  - 支持本地 Markdown 文件和飞书文档转换为小红书风格卡片图片
+  - 自动分页、多种 Markdown 格式和飞书特殊格式
+  - 生成图片直接发送到聊天窗口，发送后自动清理本地文件
+  - 原始时间线：
+    - 2026-03-25 08:56：新增 md 转小红书卡片图片工具技能
+    - 2026-03-25 09:16：升级支持飞书文档输入、callout 格式，自动发消息并清理本地文件
+    - 2026-03-25 10:36：修复 emoji 显示问题，优化字体支持
+    - 2026-03-25 12:17：设置 Notion 风格为默认主题
+    - 2026-03-25 12:33：修复分页截断 bug，增加内容冗余空间
+    - 2026-03-25 12:45：新增飞书 lark-table 格式解析支持
+    - 2026-06-02：迁移至 SkillHub
+
 ### Updated - 2026-04-01
 
 #### Claude Code 系列
@@ -48,6 +73,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | 日期 | 版本 | 变更内容 |
 |------|------|----------|
+| 2026-06-02 | - | 迁移 image-compress 和 md-to-xiaohongshu 技能（从 my-openclaw-skills 仓库） |
 | 2026-03-31 | - | 新增 audio-transcription 录音转文字技能 |
 | 2026-03-30 | - | 初始化 SkillHub 仓库，添加智谱系列技能 |
 

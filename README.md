@@ -16,6 +16,8 @@
 | zhipu-web-search | 智谱网络搜索服务：使用智谱 AI 的 Web Search API 进行网络搜索，支持多搜索引擎（智谱基础版、智谱高阶版、搜狗、夸克）。Use when: (1) 需要进行网络搜索、网页搜索、信息检索，(2) 查找网上资料、搜索最新新闻，(3) 用户明确要求使用智谱搜索。NOT for: 用户只想读取特定网页内容（使用 zhipu-web-reader）。 | [下载](https://skillhub.feixing.io/openclaw/zhipu-web-search.skill) |
 | zhipu-layout-parsing | 智谱文档布局解析服务：使用 GLM-OCR 模型解析文档和图片的布局结构，识别文本、表格、公式、图片等元素，返回 Markdown 格式结果和详细布局信息。Use when: (1) 解析文档布局、提取文档结构，(2) 识别表格、公式、图片，(3) 分析 PDF 布局，(4) 提取扫描件内容。NOT for: 用户只需要简单文字 OCR（使用 zhipu-ocr）。 | [下载](https://skillhub.feixing.io/openclaw/zhipu-layout-parsing.skill) |
 | zhipu-file-parser | 智谱文件解析服务。使用智谱AI的文件解析API解析多种文件格式（PDF、DOCX、DOC、XLS、XLSX、PPT、PPTX、图片等），提取文本内容。支持同步解析，返回结构化结果。 | [下载](https://skillhub.feixing.io/openclaw/zhipu-file-parser.skill) |
+| image-compress | 图片压缩技能，支持PNG/JPG/GIF/SVG格式无损/有损压缩，压缩率和ImageOptim完全一致。触发场景：压缩图片、减小图片大小、图片优化。 | [下载](https://skillhub.feixing.io/openclaw/image-compress.skill) |
+| md-to-xiaohongshu | Markdown/飞书文档转小红书卡片图片工具。支持自动分页、多种Markdown格式和飞书特殊格式，生成图片直接发送到聊天窗口，发送后自动清理本地文件。 | [下载](https://skillhub.feixing.io/openclaw/md-to-xiaohongshu.skill) |
 
 
 ### Claude Code 系列
