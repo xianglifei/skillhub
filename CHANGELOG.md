@@ -10,6 +10,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed - 2026-06-02
 
 - 重构 README 技能列表：取消按 Agent 分类，改为统一表格
+  - 新增「分类」列标注功能性分类（办公/开发/搜索）
+  - 所有技能按名称首字母排序
+
+### Added - 2026-06-02
+
+- **zhihu-research** - 知乎全能研究助手（从本地技能迁入）
+  - 集成全网搜索、站内搜索、热榜、知达 AI 问答与深度研究编排
+  - 深度研究模式自动协同知达+双路搜索
+  - 需配置 ZHIHU_ACCESS_SECRET 环境变量
   - 新增「分类」列标注功能性分类（办公/开发）
   - 所有技能按名称首字母排序
 

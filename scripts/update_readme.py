@@ -38,6 +38,8 @@ SKILL_CATEGORIES = {
     "product-review": "办公",
     "setup-custom-llm": "开发",
     "setup-sound-notifications": "开发",
+    "zhihu-research": "搜索",
+    "zhihu-research": "知乎全能研究助手 — 集成全网搜索、站内搜索、热榜、知达 AI 问答与深度研究编排",
     "zhipu-file-parser": "办公",
     "zhipu-layout-parsing": "办公",
     "zhipu-toolkit": "办公",

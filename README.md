@@ -16,6 +16,7 @@
 | product-review | 办公 | AI 产品创意多专家评审系统。输入产品创意，获得 5 位专家的多维度评审报告和毒舌劝退建议。 | [下载](https://skillhub.feixing.io/claude-code/product-review.skill) |
 | setup-custom-llm | 开发 | 配置第三方 LLM Provider，支持 Anthropic 和 OpenAI 两种协议，包含自动合并配置的 Python 脚本。触发场景：添加模型、配置大模型、接入 DeepSeek/OpenAI/Qwen/GLM、自定义 LLM。 | [下载](https://skillhub.feixing.io/minimax/setup-custom-llm.skill) |
 | setup-sound-notifications | 开发 | 设置或卸载声音通知。等待用户确认时播放进度循环音，任务完成时播放庆祝音。仅支持 macOS。 | [下载](https://skillhub.feixing.io/claude-code/setup-sound-notifications.skill) |
+| zhihu-research | 搜索 | 知乎全能研究助手，集成全网搜索、站内搜索、热榜、知达 AI 问答与深度研究编排。自动协同知达+双路搜索，提供知识性回答与来源佐证。需配置 ZHIHU_ACCESS_SECRET。 | [下载](https://skillhub.feixing.io/claude-code/zhihu-research.skill) |
 | zhipu-file-parser | 办公 | 智谱文件解析服务，解析 PDF/DOCX/DOC/XLS/XLSX/PPT/PPTX/图片等格式，提取文本内容，支持同步解析，返回结构化结果。 | [下载](https://skillhub.feixing.io/openclaw/zhipu-file-parser.skill) |
 | zhipu-layout-parsing | 办公 | 智谱文档布局解析服务，使用 GLM-OCR 模型识别文本、表格、公式、图片等元素，返回 Markdown 格式结果和详细布局信息。 | [下载](https://skillhub.feixing.io/openclaw/zhipu-layout-parsing.skill) |
 | zhipu-toolkit | 办公 | 智谱 AI 工具集：整合文件解析、文档布局解析、网页阅读、网络搜索四大能力，支持多种搜索引擎和输出格式。 | [下载](https://skillhub.feixing.io/openclaw/zhipu-toolkit.skill) |
