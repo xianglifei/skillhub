@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed - 2026-06-05
+
+- 合并目录结构：将 `claude-code/`、`openclaw/`、`minimax/` 统一迁移至 `skills/` 目录
+- 同名技能加后缀区分：`zhipu-web-reader-cc`/`zhipu-web-reader-oc`、`zhipu-web-search-cc`/`zhipu-web-search-oc`
+
+### Added - 2026-06-05
+
+- **wechat-cover-art** - 微信公众号文章配图技能（基于 dreamina CLI）
+  - 自动按微信规范生成头条封面（21:9 高清）、正文插图、次条封面
+  - Prompt 安全区增强，确保朋友圈裁切后效果 OK
+
 ### Changed - 2026-06-02
 
 - 重构 README 技能列表：取消按 Agent 分类，改为统一表格
@@ -98,6 +109,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | 日期 | 版本 | 变更内容 |
 |------|------|----------|
+| 2026-06-05 | - | 合并目录结构至 skills/，新增 wechat-cover-art 技能 |
 | 2026-06-02 | - | 迁移 image-compress 和 md-to-xiaohongshu 技能（从 my-openclaw-skills 仓库） |
 | 2026-03-31 | - | 新增 audio-transcription 录音转文字技能 |
 | 2026-03-30 | - | 初始化 SkillHub 仓库，添加智谱系列技能 |

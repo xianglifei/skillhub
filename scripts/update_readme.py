@@ -21,15 +21,20 @@ BASE_URL = "https://skillhub.feixing.io"
 SKILL_DESCRIPTIONS = {
     "zhipu-file-parser": "智谱文件解析服务。使用智谱AI的文件解析API解析多种文件格式（PDF、DOCX、DOC、XLS、XLSX、PPT、PPTX、图片等），提取文本内容。支持同步解析，返回结构化结果。",
     "zhipu-ocr": "智谱OCR服务。使用智谱AI的OCR API识别图片中的文字，支持手写体识别、多语言识别。",
-    "zhipu-web-search": "智谱网络搜索服务。使用智谱AI的Web Search API进行网络搜索。",
-    "zhipu-web-reader": "智谱网页内容读取服务。使用智谱AI的Reader API读取并解析指定URL的网页内容，支持Markdown/Text格式。",
+    "zhipu-web-search-cc": "智谱网络搜索服务（Claude Code 版）。使用智谱AI的Web Search API进行网络搜索，集成 Python 脚本。",
+    "zhipu-web-search-oc": "智谱网络搜索服务（OpenClaw 版）。使用智谱AI的Web Search API进行网络搜索，基于 curl/jq 实现。",
+    "zhipu-web-reader-cc": "智谱网页内容读取服务（Claude Code 版）。使用智谱AI的Reader API读取并解析网页内容，集成 Python 脚本。",
+    "zhipu-web-reader-oc": "智谱网页内容读取服务（OpenClaw 版）。使用智谱AI的Reader API读取并解析网页内容，基于 curl/jq 实现。",
     "zhipu-layout-parsing": "智谱文档布局解析服务。使用GLM-OCR模型解析文档和图片的布局结构。",
+    "wechat-cover-art": "微信公众号文章配图技能。基于 dreamina CLI，自动按微信规范生成头条封面、正文插图、次条封面。",
+    "ima": "IMA 笔记与知识库操作技能。支持上传文件到知识库、添加网页、搜索知识库内容、搜索/浏览/创建/编辑笔记。",
 }
 
 # 技能功能分类映射（优先级最高）
 SKILL_CATEGORIES = {
     "audio-transcription": "办公",
     "image-compress": "办公",
+    "ima": "办公",
     "list-cli": "开发",
     "list-github-repo": "开发",
     "md-to-xiaohongshu": "办公",
@@ -38,17 +43,19 @@ SKILL_CATEGORIES = {
     "product-review": "办公",
     "setup-custom-llm": "开发",
     "setup-sound-notifications": "开发",
+    "wechat-cover-art": "办公",
     "zhihu-research": "搜索",
-    "zhihu-research": "知乎全能研究助手 — 集成全网搜索、站内搜索、热榜、知达 AI 问答与深度研究编排",
     "zhipu-file-parser": "办公",
     "zhipu-layout-parsing": "办公",
     "zhipu-toolkit": "办公",
-    "zhipu-web-reader": "办公",
-    "zhipu-web-search": "办公",
+    "zhipu-web-reader-cc": "办公",
+    "zhipu-web-reader-oc": "办公",
+    "zhipu-web-search-cc": "办公",
+    "zhipu-web-search-oc": "办公",
 }
 
 # 扫描的目录
-SKILL_DIRS = ['openclaw', 'claude-code', 'minimax']
+SKILL_DIRS = ['skills']
 
 
 def extract_existing_table(readme_path):
@@ -132,7 +139,7 @@ def scan_skills(base_dir, existing_info):
         if category_dir.is_dir():
             for skill_file in category_dir.glob('*.skill'):
                 skill_name, category, description = extract_skill_metadata(skill_file, existing_info)
-                download_url = f"{BASE_URL}/{dir_name}/{skill_file.name}"
+                download_url = f"{BASE_URL}/skills/{skill_file.name}"
                 skills.append({
                     'name': skill_name,
                     'category': category,
